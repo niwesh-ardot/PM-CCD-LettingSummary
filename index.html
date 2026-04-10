@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Letting Summary Generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="controls-panel">
+      <h1>Letting Summary Page 1</h1>
+      <p class="helper-text">Upload the Excel file, choose the letting date, and generate the first page.</p>
+
+      <label class="control-block">
+        <span>Excel file</span>
+        <input type="file" id="excelFile" accept=".xlsx,.xls" />
+      </label>
+
+      <label class="control-block">
+        <span>Letting date</span>
+        <input type="date" id="lettingDate" />
+      </label>
+
+      <div class="button-row">
+        <button id="generateBtn">Generate page</button>
+        <button id="printBtn" class="secondary">Print / Save PDF</button>
+      </div>
+
+      <div class="legend-card">
+        <strong>Expected Excel columns</strong>
+        <code>CALLORDER, PROPOSAL_NM, Bidders, Proposal Holders, %OverUnder, Percent Group, PROPOSALITEMTOTAL, Site Use</code>
+      </div>
+
+      <div id="status" class="status">Waiting for file.</div>
+    </aside>
+
+    <main class="preview-wrap">
+      <section id="reportPage" class="report-page">
+        <div class="report-title" id="reportTitle">Letting Summary</div>
+
+        <div class="report-body">
+          <div class="left-panel">
+            <div class="metric-block first-metric">
+              <div class="metric-label">Projects</div>
+              <div class="metric-value" id="projectsValue">0</div>
+            </div>
+
+            <div class="metric-block">
+              <div class="metric-label">Bids Received</div>
+              <div class="metric-value" id="bidsValue">0</div>
+            </div>
+
+            <div class="metric-block">
+              <div class="metric-label">Proposals Issued</div>
+              <div class="metric-value" id="proposalsValue">0</div>
+            </div>
+
+            <div class="metric-block money-block">
+              <div class="metric-label">Low Bid Total</div>
+              <div class="metric-money" id="lowBidValue">$0</div>
+            </div>
+
+            <div class="metric-block money-block estimate-block">
+              <div class="metric-label">Letting Estimate</div>
+              <div class="metric-money" id="estimateValue">$0</div>
+            </div>
+
+            <div class="chart-section">
+              <div id="pieStage" class="pie-stage"></div>
+              <div class="custom-legend" id="customLegend"></div>
+            </div>
+          </div>
+
+          <div class="table-panel">
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>Job No.</th>
+                  <th>Site<br>Use</th>
+                  <th>Proposals Issued</th>
+                  <th>Bids Received</th>
+                  <th>Percentage<br>Over/Under</th>
+                </tr>
+              </thead>
+              <tbody id="summaryBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">Grand Total</td>
+                  <td id="grandProposals">0</td>
+                  <td id="grandBids">0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
