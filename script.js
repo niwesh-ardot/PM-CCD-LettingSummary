@@ -138,6 +138,42 @@ function renderTable(rows) {
   });
 }
 
+function fitTableToPageBottom() {
+  const reportPage = document.getElementById('reportPage');
+  const table = document.querySelector('.summary-table');
+  const tbody = document.getElementById('summaryBody');
+  if (!reportPage || !table || !tbody) return;
+
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  if (!rows.length) return;
+
+  rows.forEach((row) => {
+    row.style.height = '';
+    row.querySelectorAll('td').forEach((cell) => {
+      cell.style.height = '';
+    });
+  });
+
+  const pageRect = reportPage.getBoundingClientRect();
+  const tableRect = table.getBoundingClientRect();
+  const theadHeight = table.querySelector('thead')?.getBoundingClientRect().height || 0;
+  const tfootHeight = table.querySelector('tfoot')?.getBoundingClientRect().height || 0;
+  const bottomGap = 8;
+
+  const availableBodyHeight =
+    pageRect.bottom - tableRect.top - theadHeight - tfootHeight - bottomGap;
+
+  if (availableBodyHeight <= 0) return;
+
+  const rowHeight = Math.max(12, availableBodyHeight / rows.length);
+  rows.forEach((row) => {
+    row.style.height = `${rowHeight}px`;
+    row.querySelectorAll('td').forEach((cell) => {
+      cell.style.height = `${rowHeight}px`;
+    });
+  });
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll('&', '&amp;')
@@ -314,6 +350,7 @@ async function generateReport() {
 
     renderMetrics(summary, dateInput.value);
     renderTable(rows);
+    fitTableToPageBottom();
     renderLegend();
     renderPie(summary.categoryCounts);
 
@@ -326,6 +363,9 @@ async function generateReport() {
 
 generateBtn.addEventListener('click', generateReport);
 printBtn.addEventListener('click', () => window.print());
+window.addEventListener('resize', fitTableToPageBottom);
+window.addEventListener('beforeprint', fitTableToPageBottom);
 setDefaultDate();
 renderLegend();
 renderPie([16, 3, 0, 4, 8]);
+fitTableToPageBottom();

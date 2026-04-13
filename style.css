@@ -1,6 +1,6 @@
 :root {
   --page-width: 768px;
-  --page-height: 990px;
+  --page-height: 1296px;
   --page-bg: #efefef;
   --text: #222222;
   --blue-label: #6f8fb0;
@@ -145,11 +145,14 @@ button.secondary {
   display: grid;
   grid-template-columns: 192px 1fr;
   column-gap: 12px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .left-panel {
   padding-top: 62px;
+   display: flex;
+   flex-direction: column;
+   min-height: 100%;
 }
 
 .metric-block {
@@ -193,7 +196,7 @@ button.secondary {
 
 .chart-section {
   width: 180px;
-  margin: 2px auto 0;
+  margin: auto auto 0;
 }
 
 .pie-stage {
@@ -327,6 +330,11 @@ button.secondary {
 }
 
 @media print {
+   :root {
+    --page-width: 8.5in;
+    --page-height: 14in;
+  }
+
   body {
     background: #fff;
   }
@@ -344,12 +352,15 @@ button.secondary {
   }
 
   .report-page {
+    width: calc(100% - 0.3in);
+    min-height: calc(14in - 0.3in);
     box-shadow: none;
     margin: 0;
+    padding-bottom: 0.1in;
   }
 
   @page {
-    size: 8.5in 11in;
+    size: legal portrait;
     margin: 0.15in;
   }
 }
