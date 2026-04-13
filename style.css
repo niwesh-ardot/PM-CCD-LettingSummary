@@ -1,12 +1,18 @@
 :root {
   --page-width: 768px;
   --page-height: 1296px;
-  --page-bg: #efefef;
+  --font-tableau-book: "Tableau Book", "Segoe UI", Arial, sans-serif;
+  --font-tableau-semibold: "Tableau Semibold", "Tableau Book", "Segoe UI", Arial, sans-serif;
+  --page-bg: #f2f2f2;
   --text: #222222;
-  --blue-label: #6f8fb0;
-  --grid: #cfcfcf;
+  --title: #3a3a3a;
+  --blue-label: #6f93b8;
+  --kpi-number: #1f1f1f;
+  --table-header: #3f3f3f;
+  --table-body: #4a4a4a;
+  --grid: #d6d6d6;
   --row-alt: #dfdfdf;
-  --footer: #c8c8c8;
+  --footer: #d1d1d1;
   --green-dark: #006400;
   --green-light: #23a023;
   --gray-none: #d9d9d9;
@@ -22,7 +28,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-tableau-book);
   color: var(--text);
   background: #dde4ea;
 }
@@ -128,17 +134,19 @@ button.secondary {
   min-height: var(--page-height);
   margin: 0 auto;
   background: var(--page-bg);
+  font-family: var(--font-tableau-book);
   padding: 39px 17px 18px 17px;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.10);
 }
 
 .report-title {
   text-align: center;
-  font-size: 35px;
+  font-family: var(--font-tableau-book);
+  font-size: 28pt;
   font-weight: 400;
   line-height: 1;
   margin: 10px 0 31px;
-  color: #243343;
+  color: var(--title);
 }
 
 .report-body {
@@ -165,25 +173,28 @@ button.secondary {
 }
 
 .metric-label {
+  font-family: var(--font-tableau-book);
   color: var(--blue-label);
-  font-size: 20px;
+  font-size: 15pt;
   line-height: 1.1;
   font-weight: 400;
   margin-bottom: 11px;
 }
 
 .metric-value {
-  font-size: 36px;
+  font-family: var(--font-tableau-book);
+  font-size: 27pt;
   line-height: 1;
   font-weight: 400;
-  color: #000;
+  color: var(--kpi-number);
 }
 
 .metric-money {
-  font-size: 30px;
+  font-family: var(--font-tableau-book);
+  font-size: 24pt;
   line-height: 1.05;
   font-weight: 400;
-  color: #2d2d2d;
+  color: var(--kpi-number);
 }
 
 .money-block {
@@ -252,8 +263,9 @@ button.secondary {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: 11px;
-  color: #000;
+  font-family: var(--font-tableau-book);
+  font-size: 10.5pt;
+  color: var(--table-body);
 }
 
 .summary-table th,
@@ -264,9 +276,11 @@ button.secondary {
 }
 
 .summary-table thead th {
-  font-size: 11px;
+  font-family: var(--font-tableau-semibold);
+  color: var(--table-header);
+  font-size: 11.5pt;
   line-height: 1.05;
-  font-weight: 400;
+  font-weight: 600;
   text-align: center;
   padding-top: 2px;
   padding-bottom: 5px;
