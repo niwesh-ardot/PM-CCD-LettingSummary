@@ -3,7 +3,7 @@
   --page-height: 1296px;
   --font-tableau-book: "Tableau Book", "Segoe UI", Arial, sans-serif;
   --font-tableau-semibold: "Tableau Semibold", "Tableau Book", "Segoe UI", Arial, sans-serif;
-  --page-bg: #f2f2f2;
+  --page-bg: #ffffff;
   --text: #222222;
   --title: #3a3a3a;
   --blue-label: #6f93b8;
@@ -317,7 +317,7 @@ button.secondary {
 }
 
 .summary-table tbody tr:nth-child(even) {
-  background: var(--row-alt);
+  background-color: var(--row-alt);
 }
 
 .summary-table tbody td:first-child {
@@ -325,7 +325,7 @@ button.secondary {
 }
 
 .summary-table tfoot td {
-  background: var(--footer);
+  background-color: var(--footer);
   font-weight: 700;
   border-bottom: 0;
 }
@@ -335,9 +335,14 @@ button.secondary {
 }
 
 @media print {
-   :root {
+  :root {
     --page-width: 8.5in;
     --page-height: 14in;
+  }
+
+   * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   body {

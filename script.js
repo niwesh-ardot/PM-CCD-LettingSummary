@@ -174,7 +174,7 @@ function fitTableToPageBottom() {
   const tableRect = table.getBoundingClientRect();
   const theadHeight = table.querySelector('thead')?.getBoundingClientRect().height || 0;
   const tfootHeight = table.querySelector('tfoot')?.getBoundingClientRect().height || 0;
-  const bottomGap = 8;
+  const bottomGap = 2;
 
   const availableBodyHeight =
     pageRect.bottom - tableRect.top - theadHeight - tfootHeight - bottomGap;
