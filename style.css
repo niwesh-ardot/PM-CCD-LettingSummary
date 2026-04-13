@@ -134,7 +134,7 @@ button.secondary {
 
 .report-title {
   text-align: center;
-  font-size: 24px;
+  font-size: 35px;
   font-weight: 400;
   line-height: 1;
   margin: 10px 0 31px;
@@ -150,14 +150,14 @@ button.secondary {
 
 .left-panel {
   padding-top: 62px;
-   display: flex;
-   flex-direction: column;
-   min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .metric-block {
   text-align: center;
-  margin-bottom: 34px;
+  margin-bottom: 38px;
 }
 
 .first-metric {
@@ -166,21 +166,21 @@ button.secondary {
 
 .metric-label {
   color: var(--blue-label);
-  font-size: 17px;
+  font-size: 20px;
   line-height: 1.1;
   font-weight: 400;
-  margin-bottom: 13px;
+  margin-bottom: 11px;
 }
 
 .metric-value {
-  font-size: 21px;
+  font-size: 36px;
   line-height: 1;
   font-weight: 400;
   color: #000;
 }
 
 .metric-money {
-  font-size: 20px;
+  font-size: 30px;
   line-height: 1.05;
   font-weight: 400;
   color: #2d2d2d;
@@ -195,22 +195,22 @@ button.secondary {
 }
 
 .chart-section {
-  width: 180px;
+  width: 182px;
   margin: auto auto 0;
 }
 
 .pie-stage {
   position: relative;
-  width: 180px;
-  height: 140px;
+  width: 182px;
+  height: 176px;
   margin: 0 auto 10px;
   overflow: visible;
 }
 
 .pie-stage svg {
   display: block;
-  width: 180px;
-  height: 140px;
+  width: 182px;
+  height: 176px;
 }
 
 .pie-label {
@@ -235,22 +235,13 @@ button.secondary {
 .custom-legend {
   width: 162px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 39px 1fr;
 }
 
-.legend-swatch {
-  min-height: 18px;
-}
 
-.legend-text {
-  min-height: 18px;
-  display: flex;
-  align-items: center;
-  padding: 1px 0 1px 6px;
-  font-size: 9px;
-  line-height: 1.15;
-  color: #111;
+.legend-image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .table-panel {

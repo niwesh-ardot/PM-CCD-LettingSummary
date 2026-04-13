@@ -98,8 +98,24 @@ function computeSummary(rows) {
   const estimateTotal = rows.reduce((sum, row) => sum + row.estimate, 0);
   const lowBidTotal = rows.reduce((sum, row) => sum + row.estimate * (1 + row.overUnder), 0);
 
-  const categoryCounts = CATEGORY_META.map((category) => rows.filter((row) => row.percentGroup === category.key).length);
+  const categoryCounts = [0, 0, 0, 0, 0];
+  rows.forEach((row) => {
+    if (row.bidders <= 0) {
+      categoryCounts[2] += 1;
+      return;
+    }
 
+    const pct = row.overUnder;
+    if (pct < -0.1) {
+      categoryCounts[0] += 1;
+    } else if (pct < 0) {
+      categoryCounts[1] += 1;
+    } else if (pct <= 0.1) {
+      categoryCounts[3] += 1;
+    } else {
+      categoryCounts[4] += 1;
+    }
+  });
   return {
     projects,
     bidsReceived,
@@ -186,19 +202,12 @@ function escapeHtml(value) {
 function renderLegend() {
   const legend = document.getElementById('customLegend');
   legend.innerHTML = '';
-
-  CATEGORY_META.forEach((item) => {
-    const swatch = document.createElement('div');
-    swatch.className = 'legend-swatch';
-    swatch.style.background = item.color;
-
-    const text = document.createElement('div');
-    text.className = 'legend-text';
-    text.innerHTML = item.label.replaceAll('\n', '<br>');
-
-    legend.appendChild(swatch);
-    legend.appendChild(text);
-  });
+  const image = document.createElement('img');
+  image.className = 'legend-image';
+  image.src = 'assets/Legend.PNG';
+  image.alt = 'Pie chart legend';
+  image.loading = 'eager';
+  legend.appendChild(image);
 }
 
 function polarToCartesian(cx, cy, radius, angle) {
@@ -236,11 +245,11 @@ function renderPie(categoryCounts) {
 
   pieStage.innerHTML = '';
 
-  const width = 180;
-  const height = 140;
-  const cx = 84;
-  const cy = 68;
-  const r = 50;
+  const width = 182;
+  const height = 176;
+  const cx = 90;
+  const cy = 80;
+  const r = 68;
 
   const total = categoryCounts.reduce((a, b) => a + b, 0);
 
@@ -272,10 +281,11 @@ function renderPie(categoryCounts) {
 
   if (total > 0) {
     let startAngle = -Math.PI / 2;
+    const slices = [];
 
     // Tableau-like visual order:
     // dark red -> light red -> light green -> dark green -> gray
-    const drawOrder = [4, 3, 1, 0, 2];
+    const drawOrder = [4, 3, 2, 1, 0];
 
     drawOrder.forEach((index) => {
       const count = categoryCounts[index] || 0;
@@ -288,8 +298,26 @@ function renderPie(categoryCounts) {
       path.setAttribute('d', makeSlicePath(cx, cy, r, startAngle, endAngle));
       path.setAttribute('fill', CATEGORY_META[index].color);
       svg.appendChild(path);
+      slices.push({
+        index,
+        count,
+        mid: startAngle + sweep / 2
+      });
 
       startAngle = endAngle;
+    });
+    
+    pieStage.appendChild(svg);
+
+    slices.forEach((slice) => {
+      const labelRadius = r + 20;
+      const point = polarToCartesian(cx, cy, labelRadius, slice.mid);
+      const label = document.createElement('div');
+      label.className = 'pie-label';
+      label.textContent = String(slice.count);
+      label.style.left = `${point.x - 5}px`;
+      label.style.top = `${point.y - 6}px`;
+      pieStage.appendChild(label);
     });
   } else {
     const circle = document.createElementNS(svgNS, 'circle');
@@ -300,27 +328,9 @@ function renderPie(categoryCounts) {
     svg.appendChild(circle);
   }
 
-  pieStage.appendChild(svg);
-
-  const labelPositions = {
-    4: { left: 10, top: 10 },   // dark red = 8, upper-left
-    3: { left: 24, top: 86 },   // light red = 4, lower-left
-    1: { left: 60, top: 118 },  // light green = 3, bottom
-    0: { left: 154, top: 49 }   // dark green = 16, right
-  };
-
-  [4, 3, 1, 0].forEach((index) => {
-    const value = categoryCounts[index] || 0;
-    const pos = labelPositions[index];
-    if (!value || !pos) return;
-
-    const label = document.createElement('div');
-    label.className = 'pie-label';
-    label.textContent = value;
-    label.style.left = `${pos.left}px`;
-    label.style.top = `${pos.top}px`;
-    pieStage.appendChild(label);
-  });
+  if (!pieStage.querySelector('svg')) {
+    pieStage.appendChild(svg);
+  }
 }
 
 
